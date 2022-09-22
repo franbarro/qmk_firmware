@@ -69,8 +69,22 @@ bool dip_switch_update_kb(uint8_t index, bool active) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint8_t host_idx = 0;
+    static uint32_t key_timer;
 
     switch (keycode) {
+        case MD_BOOT:
+            if (record->event.pressed) {
+                key_timer = timer_read32();
+            } else {
+                if (timer_elapsed32(key_timer) >= 500) {
+                    reset_keyboard();
+                }
+            }
+            return false;
+        case COPY_ALL:
+            // Selects all and text and copy
+            SEND_STRING(SS_LCTRL("ac"));
+            return false;
         case KC_LOPTN:
         case KC_ROPTN:
         case KC_LCMMD:

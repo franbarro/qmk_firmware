@@ -41,6 +41,8 @@ enum {
     KC_SNAP,
     KC_CTANA,
     KC_SIRI,
+	MD_BOOT,
+	COPY_ALL,
 #ifdef BLUETOOTH_ENABLE
     BT_HST1,
     BT_HST2,
